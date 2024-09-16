@@ -8,7 +8,7 @@ function ButtonLogout() {
       <form action={logout}>
         <Button
           type="submit"
-          variant="destructive"
+          variant="default"
           className="w-full justify-start"
         >
           <LogOut className="mr-2 h-4 w-4" />
