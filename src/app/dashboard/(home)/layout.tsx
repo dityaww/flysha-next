@@ -8,8 +8,10 @@ import { BookOpenText } from "lucide-react";
 import { Ticket } from "lucide-react";
 import { User } from "lucide-react";
 import ButtonLogout from "./components/button-logout";
+import { getUser } from "@/lib/auth";
 
 import { Inter } from "next/font/google";
+import { redirect } from "next/navigation";
 // If loading a variable font, you don't need to specify the font weight
 const inter = Inter({
   subsets: ["latin"],
@@ -20,11 +22,18 @@ export const metadata: Metadata = {
   title: "Dashboard",
 };
 
-export default function DashboardLayout({
+export default async function DashboardLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const { user, session } = await getUser()
+
+  if (session === null || user.role === 'CUSTOMER') {
+    redirect('dashboard/login')
+  }
+
   return (
     <html lang="en">
       <body className={`${inter.className} antialiased`}>
@@ -43,7 +52,7 @@ export default function DashboardLayout({
                   asChild
                   className="w-full justify-start"
                 >
-                  <Link href={"/"}>Dashboard</Link>
+                  <Link href={"/dashboard"}>Dashboard</Link>
                 </Button>
               </div>
 
