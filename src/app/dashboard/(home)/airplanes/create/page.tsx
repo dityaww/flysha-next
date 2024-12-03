@@ -9,10 +9,10 @@ const CreateAirplanePage: FC = () => {
   return (
     <div className="">
       <div className="flex flex-row items-center justify-between">
-        <div className="my-5 text-2xl font-bold">Form Airplane</div>
+        <div className="my-5 text-2xl font-bold">Add Data Airplane</div>
       </div>
 
-      <FormAirplane />
+      <FormAirplane type="ADD" />
     </div>
   );
 };
