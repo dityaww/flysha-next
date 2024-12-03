@@ -6,7 +6,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import type { FC } from "react";
 import { useFormState, useFormStatus } from "react-dom";
-import { saveAirplane } from "../lib/action";
+import { saveAirplane, updateAirplane } from "../lib/action";
+import type { Airplane } from "@prisma/client";
+
+interface FormAirplaneProps {
+  type?: "ADD"| "EDIT"
+  defaultValues?: Airplane | null
+}
 
 const initialFormState: ActionResult = {
   errorTitle: null,
@@ -23,8 +29,11 @@ const SubmitButton = () => {
   );
 };
 
-const FormAirplane: FC = () => {
-  const [state, formAction] = useFormState(saveAirplane, initialFormState);
+const FormAirplane: FC<FormAirplaneProps> = ({type, defaultValues}) => {
+
+  const updateAirplaneWithId = (_state: ActionResult, formData: FormData) => updateAirplane(null, defaultValues?.id!!, formData)
+
+  const [state, formAction] = useFormState(type === "ADD" ? saveAirplane : updateAirplaneWithId, initialFormState);
 
   return (
     <form action={formAction} className="w-[30%] space-y-4">
@@ -43,12 +52,12 @@ const FormAirplane: FC = () => {
 
       <div className="space-y-2">
         <Label htmlFor="code">Kode Pesawat</Label>
-        <Input placeholder="Kode pesawat.." name="code" id="code" required />
+        <Input placeholder="Kode pesawat.." name="code" id="code" required defaultValue={defaultValues?.code}/>
       </div>
 
       <div className="space-y-2">
         <Label htmlFor="name">Nama Pesawat</Label>
-        <Input placeholder="Nama pesawat.." name="name" id="name" required />
+        <Input placeholder="Nama pesawat.." name="name" id="name" required defaultValue={defaultValues?.name}/>
       </div>
 
       <div className="space-y-2">
