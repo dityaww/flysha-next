@@ -7,6 +7,7 @@ import type { ColumnDef } from "@tanstack/react-table";
 import Link from "next/link";
 import Image from "next/image";
 import { getUrlFile } from "@/lib/supabase";
+import DeleteAirplane from "./delete-airplane";
 
 export const columns: ColumnDef<Airplane>[] = [
   {
@@ -41,6 +42,7 @@ export const columns: ColumnDef<Airplane>[] = [
                 Edit
             </Link>
           </Button>
+          <DeleteAirplane id={plane.id} />
         </div>
       );
     },
